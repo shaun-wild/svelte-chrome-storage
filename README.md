@@ -7,7 +7,7 @@ data changed in one is immediately reflected in the other. 🚀
 
 -----
 
-![NPM version](https://img.shields.io/npm/v/svelte-chrome-storage)
+[![NPM version](https://img.shields.io/npm/v/svelte-chrome-storage)](https://www.npmjs.com/package/svelte-chrome-storage)
 
 ## Installation
 
