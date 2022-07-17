@@ -8,6 +8,7 @@ data changed in one is immediately reflected in the other. 🚀
 -----
 
 [![NPM version](https://img.shields.io/npm/v/svelte-chrome-storage)](https://www.npmjs.com/package/svelte-chrome-storage)
+[![NPM Publish](https://github.com/shaun-wild/svelte-chrome-storage/actions/workflows/publish-to-npm.yml/badge.svg)](https://github.com/shaun-wild/svelte-chrome-storage/actions/workflows/publish-to-npm.yml)
 
 ## Installation
 
@@ -21,7 +22,7 @@ npm i svelte-chrome-storage
 
 ### Reactive Syntax
 
-```sveltehtml
+```html
 <script>
     import {chromeStorageLocal} from "svelte-chrome-storage"
     
@@ -35,7 +36,7 @@ npm i svelte-chrome-storage
 
 ### Pub-sub Syntax
 
-```sveltehtml
+```html
 <script>
     import {chromeStorageSync} from "svelte-chrome-storage"
     
