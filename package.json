@@ -1,6 +1,6 @@
 {
   "name": "svelte-chrome-storage",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A lightweight abstraction between Svelte stores and Chrome extension storage.",
   "main": "dist/index.js",
   "repository": {
@@ -21,8 +21,6 @@
   "license": "ISC",
   "dependencies": {
     "@types/chrome": "^0.0.193",
-    "i": "^0.3.7",
-    "npm": "^8.14.0",
     "svelte": "^3.49.0"
   },
   "devDependencies": {
