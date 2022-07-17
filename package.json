@@ -1,8 +1,12 @@
 {
   "name": "svelte-chrome-storage",
   "version": "0.1.0",
-  "description": "A simple adapter to allow reactive change to chrome extension storage.",
+  "description": "A lightweight abstraction between Svelte stores and Chrome extension storage.",
   "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/shaun-wild/svelte-chrome-storage"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest --coverage"

@@ -76,4 +76,8 @@ describe('chrome storage store adapter', () => {
 
         expect(callback).toHaveBeenCalledWith("newTest")
     })
+
+    it('should not call if nothing registered', () => {
+        chrome.storage.onChanged.callListeners({test: {newValue: "newTest", oldValue: "test"}}, "local")
+    })
 })

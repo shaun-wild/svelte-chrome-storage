@@ -13,7 +13,7 @@ const adapters: { [key in AreaName]: AdapterDictionary } = {
 chrome.storage.onChanged.addListener((changes, area) => {
     const areaAdapters = adapters[area]
     Object.entries(changes).forEach(([key, value]) => {
-        areaAdapters[key].forEach(run => run(value.newValue))
+        areaAdapters[key]?.forEach(run => run(value.newValue))
     })
 })
 
