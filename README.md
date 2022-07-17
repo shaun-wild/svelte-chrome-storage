@@ -2,6 +2,13 @@
 
 A lightweight abstraction between Svelte stores and Chrome extension storage.
 
+This library makes data synchronization of background and popup scripts super simple,
+data changed in one is immediately reflected in the other. 🚀
+
+-----
+
+![NPM version](https://img.shields.io/npm/v/svelte-chrome-storage)
+
 ## Installation
 
 Install:
@@ -26,7 +33,7 @@ npm i svelte-chrome-storage
 <p>{$message}</p>
 ```
 
-### Pub-sub syntax
+### Pub-sub Syntax
 
 ```sveltehtml
 <script>
@@ -37,3 +44,7 @@ npm i svelte-chrome-storage
     message.set("Hello, World!")
 </script>
 ```
+
+## Contributions
+
+Feel free to open any issues or pull requests for any changes you'd like to see.
