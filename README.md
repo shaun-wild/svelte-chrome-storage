@@ -45,6 +45,15 @@ npm i svelte-chrome-storage
 </script>
 ```
 
+The examples above set the `message` key on their respective chrome storage
+areas.
+
+Values changed using the `chrome.storage` api are also reflected.
+
+```js
+chrome.storage.local.set({message: "Hello, World!"})
+```
+
 ## Contributions
 
 Feel free to open any issues or pull requests for any changes you'd like to see.

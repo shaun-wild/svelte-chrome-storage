@@ -29,6 +29,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
  * Data will be published to/read from chrome.storage.local.
  * This is a {@link Writable} instance, and can be used in place of
  * svelte stores.
+ * @param key The key to store in the `local` chrome storage area.
  * @throws If the `storage` permission is not present in your manifest.
  * */
 export function chromeStorageLocal<T>(key: string): ChromeStorageStoreAdapter<T> {
@@ -40,6 +41,7 @@ export function chromeStorageLocal<T>(key: string): ChromeStorageStoreAdapter<T>
  * Data will be published to/read from chrome.storage.sync.
  * This is a {@link Writable} instance, and can be used in place of
  * svelte stores.
+ * @param key The key to store in the `sync` chrome storage area.
  * @throws If the `storage` permission is not present in your manifest.
  * */
 export function chromeStorageSync<T>(key: string): ChromeStorageStoreAdapter<T> {
@@ -53,6 +55,7 @@ export function chromeStorageSync<T>(key: string): ChromeStorageStoreAdapter<T> 
  * svelte stores.
  *
  * NOTE: You cannot write to a managed storage area; it is read-only.
+ * @param key The key to read from the `managed` chrome storage area.
  * @throws If the `storage` permission is not present in your manifest.
  * @throws If you try to write to this storage area.
  * */
