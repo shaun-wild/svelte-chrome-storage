@@ -83,8 +83,8 @@ class ChromeStorageStoreAdapter<T> implements Writable<T> {
 
     subscribe(run: Subscriber<T>): Unsubscriber {
         const subscriberArray = adapters[this.area][this.key] ?? (adapters[this.area][this.key] = [])
-        const index = subscriberArray.push(run)
-        return () => subscriberArray.splice(index, 1)
+        subscriberArray.push(run)
+        return () => subscriberArray.splice(subscriberArray.indexOf(run), 1)
     }
 
     update(updater: Updater<T>): void {
