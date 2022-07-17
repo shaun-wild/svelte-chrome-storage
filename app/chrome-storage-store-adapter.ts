@@ -1,4 +1,5 @@
 import type {Subscriber, Unsubscriber, Updater, Writable} from "svelte/store";
+import StorageArea = chrome.storage.StorageArea;
 
 type AdapterDictionary = { [key: string]: Array<Subscriber<any>> }
 
@@ -71,24 +72,30 @@ class ChromeStorageStoreAdapter<T> implements Writable<T> {
         private area: StorageName,
         private key: string
     ) {
+        this.storageArea = chrome.storage[this.area]
     }
+
+    private storageArea: StorageArea
 
     set(value: T): void {
         if (this.area === 'managed') {
             throw Error("Cannot set managed area")
         }
 
-        chrome.storage[this.area].set({[this.key]: value})
+        this.storageArea.set({[this.key]: value})
     }
 
     subscribe(run: Subscriber<T>): Unsubscriber {
         const subscriberArray = adapters[this.area][this.key] ?? (adapters[this.area][this.key] = [])
         subscriberArray.push(run)
+        this.storageArea.get(this.key, item => {
+            run(item[this.key])
+        })
         return () => subscriberArray.splice(subscriberArray.indexOf(run), 1)
     }
 
     update(updater: Updater<T>): void {
-        chrome.storage[this.area].get(this.key, item => {
+        this.storageArea.get(this.key, item => {
             const newItem = updater(item[this.key])
             this.set(newItem)
         })

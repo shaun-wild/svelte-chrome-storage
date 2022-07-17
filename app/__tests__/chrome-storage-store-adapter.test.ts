@@ -70,4 +70,14 @@ describe('chrome storage store adapter', () => {
     it('should not call if nothing registered', () => {
         chrome.storage.onChanged.callListeners({test: {newValue: "newTest", oldValue: "test"}}, "local")
     })
+
+    it('new subscribes get current value', () => {
+        const store = chromeStorageSync<string>("test")
+        chrome.storage.sync.get.mockImplementation((_, callback) => callback({test: "initial"}))
+
+        const callback = jest.fn()
+        store.subscribe(callback)
+
+        expect(callback).toHaveBeenCalledWith("initial")
+    })
 })
