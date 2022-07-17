@@ -9,8 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest --coverage",
-    "publish": "tsc & npm publish"
+    "test": "jest --coverage"
   },
   "keywords": [
     "chrome",

@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm test
 
   publish-npm:
@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: ./scripts/publish.sh
+      - run: npm run build
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
