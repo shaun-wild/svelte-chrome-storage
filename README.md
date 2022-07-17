@@ -12,6 +12,8 @@ npm i svelte-chrome-storage
 
 ## Usage
 
+### Reactive Syntax
+
 ```sveltehtml
 <script>
     import {chromeStorageLocal} from "svelte-chrome-storage"
@@ -22,4 +24,16 @@ npm i svelte-chrome-storage
 
 <!-- Any chrome storage updates are reactive! -->
 <p>{$message}</p>
+```
+
+### Pub-sub syntax
+
+```sveltehtml
+<script>
+    import {chromeStorageSync} from "svelte-chrome-storage"
+    
+    let message = chromeStorageSync("message")
+    message.subscribe(newMessage => console.log(newMessage))
+    message.set("Hello, World!")
+</script>
 ```

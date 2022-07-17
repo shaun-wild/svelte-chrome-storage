@@ -1,5 +1,5 @@
 import {chrome} from 'jest-chrome'
-import {chromeStorageLocal, chromeStorageManaged, chromeStorageSession, chromeStorageSync} from "../chrome-storage-store-adapter";
+import {chromeStorageLocal, chromeStorageManaged, chromeStorageSync} from "../chrome-storage-store-adapter";
 
 describe('chrome storage store adapter', () => {
     it('should register a store sync', () => {
@@ -18,16 +18,6 @@ describe('chrome storage store adapter', () => {
 
         store.subscribe(callback)
         chrome.storage.onChanged.callListeners({test: {newValue: "newTest", oldValue: "test"}}, "local")
-
-        expect(callback).toHaveBeenCalledWith("newTest")
-    })
-
-    it('should register a store session', () => {
-        const store = chromeStorageSession<string>("test")
-        const callback = jest.fn()
-
-        store.subscribe(callback)
-        chrome.storage.onChanged.callListeners({test: {newValue: "newTest", oldValue: "test"}}, "session")
 
         expect(callback).toHaveBeenCalledWith("newTest")
     })

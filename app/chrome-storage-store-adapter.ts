@@ -1,41 +1,71 @@
 import type {Subscriber, Unsubscriber, Updater, Writable} from "svelte/store";
-import AreaName = chrome.storage.AreaName;
 
 type AdapterDictionary = { [key: string]: Array<Subscriber<any>> }
 
-const adapters: { [key in AreaName]: AdapterDictionary } = {
+type StorageName = 'sync' | 'local' | 'managed'
+
+const adapters: { [key in StorageName]: AdapterDictionary } = {
     sync: {},
     local: {},
     managed: {},
-    session: {}
+}
+
+if(!chrome.storage) {
+    throw new Error("You are missing the `storage` permission in your manifest.")
 }
 
 chrome.storage.onChanged.addListener((changes, area) => {
-    const areaAdapters = adapters[area]
+    // I'm not sure if or when this is the case, but rather be safe than sorry.
+    if(area == 'session') return
+
+    const areaAdapters = adapters[area as StorageName]
     Object.entries(changes).forEach(([key, value]) => {
         areaAdapters[key]?.forEach(run => run(value.newValue))
     })
 })
 
+/**
+ * Creates a new {@link ChromeStorageStoreAdapter} for a given key.
+ * Data will be published to/read from chrome.storage.local.
+ * This is a {@link Writable} instance, and can be used in place of
+ * svelte stores.
+ * @throws If the `storage` permission is not present in your manifest.
+ * */
 export function chromeStorageLocal<T>(key: string): ChromeStorageStoreAdapter<T> {
     return new ChromeStorageStoreAdapter('local', key)
 }
 
+/**
+ * Creates a new {@link ChromeStorageStoreAdapter} for a given key.
+ * Data will be published to/read from chrome.storage.sync.
+ * This is a {@link Writable} instance, and can be used in place of
+ * svelte stores.
+ * @throws If the `storage` permission is not present in your manifest.
+ * */
 export function chromeStorageSync<T>(key: string): ChromeStorageStoreAdapter<T> {
     return new ChromeStorageStoreAdapter('sync', key)
 }
 
+/**
+ * Creates a new {@link ChromeStorageStoreAdapter} for a given key.
+ * Data will be read from chrome.storage.managed.
+ * This is a {@link Writable} instance, and can be used in place of
+ * svelte stores.
+ *
+ * NOTE: You cannot write to a managed storage area; it is read-only.
+ * @throws If the `storage` permission is not present in your manifest.
+ * @throws If you try to write to this storage area.
+ * */
 export function chromeStorageManaged<T>(key: string): ChromeStorageStoreAdapter<T> {
     return new ChromeStorageStoreAdapter('managed', key)
 }
 
-export function chromeStorageSession<T>(key: string): ChromeStorageStoreAdapter<T> {
-    return new ChromeStorageStoreAdapter('session', key)
-}
-
+/**
+ * {@link Writable} implementation that delegates to a chrome storage area.
+ * */
 class ChromeStorageStoreAdapter<T> implements Writable<T> {
     constructor(
-        private area: AreaName,
+        private area: StorageName,
         private key: string
     ) {
     }
